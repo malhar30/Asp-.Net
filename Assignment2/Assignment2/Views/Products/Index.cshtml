@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Assignment2.Models.Product>
+
+
+
+<h1>@ViewBag.Title</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index" method="get">
+    <p>
+        Category: 
+        @Html.DropDownList("CategoryId", (IEnumerable<SelectListItem>)ViewBag.CategoryName, "All Categories", new { onchange = "submit()" })
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitsInStock)
+            </th>
+            <th class="text-end">
+                Value
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                
+                
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+                <td class="text-end">
+                @Html.DisplayFor(modelItem => item.UnitsInStock)
+            </td>
+                <td class="text-end">
+                   $ @String.Format("{0:#,##0.00}", item.UnitPrice * item.UnitsInStock)
+                    
+                </td>
+            
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
